@@ -1,0 +1,23 @@
+[package]
+name = "loom-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "gRPC server for the Loom arbitrage daemon"
+
+[dependencies]
+loom-proto = { path = "../loom-proto" }
+loom-engine = { path = "../loom-engine" }
+loom-store = { path = "../loom-store" }
+
+tonic = "0.12"
+tokio = { workspace = true }
+tokio-stream = { version = "0.1", features = ["net"] }
+serde_json = "1.0"
+rusqlite = "0.32"
+tower = "0.4"
+serde = { workspace = true }

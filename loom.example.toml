@@ -1,0 +1,47 @@
+# Loom Configuration Example
+# Copy this file to loom.toml and fill in your Coinbase API credentials
+
+[fix]
+# Coinbase Sandbox FIX endpoints:
+#   Order Entry:              fix-ord.sandbox.exchange.coinbase.com:6121
+#   Market Data (snapshot):   fix-md.sandbox.exchange.coinbase.com:6121
+#   Market Data (incremental): fix-md.sandbox.exchange.coinbase.com:6122
+#
+# For Listen Mode, use Market Data (incremental) for L3 order-by-order updates
+address = "fix-md.sandbox.exchange.coinbase.com:6122"
+server_name = "fix-md.sandbox.exchange.coinbase.com"
+
+# Your Coinbase API credentials
+# Get these from: https://public.sandbox.exchange.coinbase.com/settings/api
+sender_comp_id = "YOUR_API_KEY_HERE"
+target_comp_id = "Coinbase"
+api_secret = "YOUR_API_SECRET_HERE"
+passphrase = ""
+
+# Heartbeat interval in seconds
+heartbeat_interval = 30
+
+[engine]
+# Safety margin for gravitational gating (1.5 = 150%)
+# Cycles must be at least this profitable to be considered
+safety_margin = 1.5
+
+# Trading fee in basis points (60 = 0.6%)
+fee_bps = 60
+
+# How often to check for profitable cycles (milliseconds)
+cycle_check_interval_ms = 100
+
+[server]
+# Transport type: "unix" or "tcp"
+# Unix socket is recommended for local CLI access
+transport = "unix"
+
+# Address or path depending on transport
+# Unix: path to socket file (e.g., "/tmp/loom.sock")
+# TCP: address:port (e.g., "127.0.0.1:50051")
+address = "/tmp/loom.sock"
+
+[database]
+# Path to SQLite database file for opportunity logging
+path = "./loom.db"

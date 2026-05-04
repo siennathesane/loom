@@ -1,0 +1,22 @@
+[package]
+name = "loom-engine"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "Core arbitrage detection engine with gravitational gating"
+
+[dependencies]
+rust_decimal = { workspace = true }
+uuid = { version = "1.0", features = ["v4"] }
+tokio = { workspace = true }
+loom-fix = { path = "../loom-fix" }
+loom-graph = { path = "../loom-graph" }
+loom-store = { path = "../loom-store" }
+serde_json = "1.0"
+
+[dev-dependencies]
+tempfile = "3.10"

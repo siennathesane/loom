@@ -1,0 +1,43 @@
+[package]
+name = "loom-fix"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "FIX 5.0 SP2 protocol client for Coinbase"
+
+[dependencies]
+tokio = { workspace = true }
+tokio-rustls = { workspace = true }
+rustls = { workspace = true }
+rustls-native-certs = "0.6"
+hmac = { workspace = true }
+sha2 = { workspace = true }
+base64 = { workspace = true }
+rust_decimal = "1.33"
+libc = "0.2"
+chrono = "0.4"
+
+[dev-dependencies]
+proptest = { workspace = true }
+criterion = { workspace = true }
+tokio = { workspace = true, features = ["test-util", "macros"] }
+
+[[bench]]
+name = "serialization"
+harness = false
+
+[[bench]]
+name = "parsing"
+harness = false
+
+[[bench]]
+name = "market_data"
+harness = false
+
+[[bench]]
+name = "comprehensive"
+harness = false

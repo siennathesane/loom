@@ -1,0 +1,46 @@
+[workspace]
+members = [
+    "loomctl",
+    "loom-engine",
+    "loom-fix",
+    "loom-graph",
+    "loom-harness",
+    "loom-proto",
+    "loom-server",
+    "loom-store",
+    "loom-config",
+    "loom-daemon",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "AGPL-3.0-or-later"
+authors = ["Sienna Meridian Satterwhite"]
+repository = "https://github.com/siennathesane/loom"
+description = "High-performance cryptocurrency arbitrage detection engine for Coinbase FIX"
+readme = "README.md"
+
+[workspace.dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+tokio-rustls = "0.25"
+rustls = "0.22"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+
+# Cryptography (for HMAC-SHA256)
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.21"
+
+# Numerical precision alternatives
+rust_decimal = "1.33"
+fixed = "1.25"
+
+# Testing
+proptest = "1.4"
+criterion = "0.5"

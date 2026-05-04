@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package loom;
+
+service LoomControl {
+  // Daemon management
+  rpc GetStatus(StatusRequest) returns (StatusResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
+
+  // Mode management
+  rpc GetMode(GetModeRequest) returns (GetModeResponse);
+  rpc SetMode(SetModeRequest) returns (SetModeResponse);
+
+  // Lump sum management
+  rpc ListLumpSums(ListLumpSumsRequest) returns (ListLumpSumsResponse);
+  rpc GetLumpSum(GetLumpSumRequest) returns (GetLumpSumResponse);
+
+  // Opportunities
+  rpc ListOpportunities(ListOpportunitiesRequest) returns (ListOpportunitiesResponse);
+
+  // Graph inspection
+  rpc GetGraphState(GraphStateRequest) returns (GraphStateResponse);
+  rpc GetNodeInfo(NodeInfoRequest) returns (NodeInfoResponse);
+
+  // Event streaming (server-side streaming)
+  rpc StreamEvents(EventStreamRequest) returns (stream Event);
+
+  // Bulk data export
+  rpc ExportTicks(ExportTicksRequest) returns (ExportTicksResponse);
+}
+
+// Status
+message StatusRequest {}
+message StatusResponse {
+  string mode = 1;  // "LISTEN" or "ACTIVE"
+  bool connected = 2;
+  uint64 uptime_secs = 3;
+  uint64 opportunities_detected = 4;
+  uint64 ticks_processed = 5;
+}
+
+// Shutdown
+message ShutdownRequest {}
+message ShutdownResponse {
+  bool success = 1;
+}
+
+// Mode
+message GetModeRequest {}
+message GetModeResponse {
+  string mode = 1;
+}
+
+message SetModeRequest {
+  string mode = 1;  // "LISTEN" or "ACTIVE"
+}
+message SetModeResponse {
+  bool success = 1;
+  string error = 2;
+}
+
+// Lump Sums
+message ListLumpSumsRequest {}
+message ListLumpSumsResponse {
+  repeated LumpSumInfo lump_sums = 1;
+}
+
+message LumpSumInfo {
+  string id = 1;
+  string name = 2;
+  string base_currency = 3;
+  string current_currency = 4;
+  string current_size = 5;
+  string state = 6;
+}
+
+message GetLumpSumRequest {
+  string id = 1;
+}
+message GetLumpSumResponse {
+  LumpSumInfo info = 1;
+  repeated Hop hops = 2;
+}
+
+message Hop {
+  uint32 seq = 1;
+  string from_currency = 2;
+  string to_currency = 3;
+  string size_before = 4;
+  string size_after = 5;
+  string rate = 6;
+  string fee = 7;
+  uint64 timestamp = 8;
+}
+
+// Opportunities
+message ListOpportunitiesRequest {
+  uint32 limit = 1;
+  uint64 start_time = 2;  // Unix microseconds (optional filter)
+  uint64 end_time = 3;    // Unix microseconds (optional filter)
+  bool gated_only = 4;    // Filter to only gated opportunities
+  bool ungated_only = 5;  // Filter to only ungated opportunities
+}
+message ListOpportunitiesResponse {
+  repeated OpportunityInfo opportunities = 1;
+}
+
+message OpportunityInfo {
+  string id = 1;
+  repeated string cycle = 2;
+  double expected_profit = 3;
+  double max_return_cost = 4;
+  bool gated = 5;
+  uint64 detected_at = 6;
+}
+
+// Graph
+message GraphStateRequest {}
+message GraphStateResponse {
+  uint32 node_count = 1;
+  uint32 edge_count = 2;
+  repeated string currencies = 3;
+}
+
+message NodeInfoRequest {
+  string currency = 1;
+}
+message NodeInfoResponse {
+  string currency = 1;
+  double return_cost = 2;
+  repeated EdgeInfo edges = 3;
+}
+
+message EdgeInfo {
+  string to_currency = 1;
+  double weight = 2;
+  string rate = 3;
+}
+
+// Events
+message EventStreamRequest {
+  repeated string event_types = 1;  // Filter by type
+}
+
+message Event {
+  string event_type = 1;
+  uint64 timestamp = 2;
+  string data = 3;  // JSON encoded
+}
+
+// Bulk Export
+message ExportTicksRequest {
+  uint64 start_time = 1;  // Unix microseconds (optional)
+  uint64 end_time = 2;    // Unix microseconds (optional)
+  string instrument = 3;  // Optional instrument filter
+}
+
+message ExportTicksResponse {
+  repeated TickData ticks = 1;
+}
+
+message TickData {
+  uint64 timestamp = 1;
+  string instrument = 2;
+  string side = 3;
+  string price = 4;
+  string quantity = 5;
+}

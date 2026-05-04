@@ -1,0 +1,27 @@
+[package]
+name = "loom-graph"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "Trading-pair graph with negative-cycle detection for arbitrage"
+
+[dependencies]
+# Numerical precision alternatives
+rust_decimal = { workspace = true }
+fixed = { workspace = true }
+
+[dev-dependencies]
+criterion = { workspace = true }
+proptest = { workspace = true }
+
+[[bench]]
+name = "precision_benchmark"
+harness = false
+
+[[bin]]
+name = "precision_analysis"
+path = "src/bin/precision_analysis.rs"

@@ -1,0 +1,20 @@
+[package]
+name = "loom-proto"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "Protocol buffer definitions for the Loom gRPC API"
+
+[dependencies]
+tonic = "0.12"
+prost = "0.13"
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = "1.0"
+
+[build-dependencies]
+tonic-build = "0.12"

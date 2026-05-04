@@ -1,0 +1,22 @@
+/target
+
+# Configuration with credentials
+loom.toml
+
+# Runtime data
+loom.db
+loom.db-shm
+loom.db-wal
+/tmp/loom.sock
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Local agent tooling
+.serena/
+.omc/
