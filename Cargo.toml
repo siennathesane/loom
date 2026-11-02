@@ -27,7 +27,7 @@ readme = "README.md"
 # Async runtime
 tokio = { version = "1.35", features = ["full"] }
 tokio-rustls = "0.25"
-rustls = "0.22"
+rustls = "0.23"
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
